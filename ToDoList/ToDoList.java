@@ -14,7 +14,30 @@ public class ToDoList {
         }
 
         public void run(){
+                int choice = 0;
 
+                while (choice != 4) { 
+                        displayMenu();
+                        System.out.print("Enter your choice (1,2,3,4): ");
+                        choice = sc.nextInt();
+
+                        switch (choice){
+                                case 1:
+                                        addTask();
+                                        break;
+                                case 2:
+                                        viewTasks();
+                                        break;
+                                case 3:
+                                        break;
+                                case 4:
+                                        break;
+                                default:
+                                        System.out.println("Invalid choice");
+                        }
+                }
+                
+                sc.close();
         }
         
         private void displayMenu() {
@@ -59,11 +82,11 @@ public class ToDoList {
                         } catch (IllegalArgumentException e) {
                                 System.out.println("Invalid priority. Defaulting to LOW.");
                         }           
-        }
+                }
 
-        // Done :)
-        tasks.add(new Task(description, newDeadline, newPriority));
-        System.out.println("Task added successfully!");
+                // Done :)
+                tasks.add(new Task(description, newDeadline, newPriority));
+                System.out.println("Task added successfully!");
         }
 
         private void viewTasks(){
