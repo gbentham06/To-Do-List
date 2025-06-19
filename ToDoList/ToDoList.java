@@ -16,10 +16,11 @@ public class ToDoList {
         public void run(){
                 int choice = 0;
 
-                while (choice != 4) { 
+                while (choice != 5) { 
                         displayMenu();
                         System.out.print("Enter your choice (1,2,3,4): ");
                         choice = sc.nextInt();
+                        sc.nextLine();
 
                         switch (choice){
                                 case 1:
@@ -29,14 +30,18 @@ public class ToDoList {
                                         viewTasks();
                                         break;
                                 case 3:
+                                        completeTask();
                                         break;
                                 case 4:
+                                        deleteTask();
                                         break;
+                                case 5:
+                                        System.out.println("Quitting...");
                                 default:
                                         System.out.println("Invalid choice");
                         }
                 }
-                
+
                 sc.close();
         }
         
@@ -45,7 +50,8 @@ public class ToDoList {
                 System.out.println("1. Add Task");
                 System.out.println("2. View Tasks");
                 System.out.println("3. Mark Task as Completed");
-                System.out.println("4. Exit");
+                System.out.println("4. Delete Task");
+                System.out.println("5. Exit");
                 System.out.println("-----------------------");
 
         }
@@ -55,11 +61,10 @@ public class ToDoList {
                 // Description
                 System.out.println("Please Enter Task:");
                 String description = sc.nextLine();
-                System.out.println("Please Enter Deadline:");
 
                 // Deadline
                 LocalDate newDeadline = null;
-                System.out.print("Enter due date (YYYY-MM-DD, leave blank for no due date): ");
+                System.out.print("Enter deadline (YYYY-MM-DD, leave blank for no due date): ");
                 String dueDateString = sc.nextLine();
 
                 if (!dueDateString.trim().isEmpty()) {
@@ -91,8 +96,44 @@ public class ToDoList {
 
         private void viewTasks(){
                 if (!tasks.isEmpty()){
-                        
+                        for (int i = 0; i < tasks.size(); i++) {
+                                System.out.print(i+1);
+                                System.out.println(". " + tasks.get(i));
+                        }
+                } else {
+                        System.out.println("There are no tasks to view");
                 }
+        }
+
+        private void completeTask(){
+                viewTasks();
+                System.out.println("Enter number of task to mark complete");
+                int tasknum = sc.nextInt();
+                sc.nextLine();
+                if (tasknum <= tasks.size() && tasknum > 0){
+                        tasks.get(tasknum-1).markComplete();
+                        System.out.println("Task marked as complete");
+                } else {
+                        System.out.println("This task does not exist");
+                }
+        }
+
+        private void deleteTask(){
+                viewTasks();
+                System.out.println("Enter number of task to delete");
+                int tasknum = sc.nextInt();
+                sc.nextLine();
+                if (tasknum <= tasks.size() && tasknum > 0){
+                        tasks.remove(tasknum-1);
+                        System.out.println("Task deleted");
+                } else {
+                        System.out.println("This task does not exist");
+                }
+        }
+
+        public static void main(String[] args) {
+            ToDoList project = new ToDoList();
+            project.run();
         }
 }
 
